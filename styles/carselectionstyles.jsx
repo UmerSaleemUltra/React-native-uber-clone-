@@ -1,94 +1,86 @@
+// carselectionstyles.js
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#F5F5F5',
+    padding: 16,
+    backgroundColor: '#fff',
   },
-  locationContainer: {
-    marginBottom: 20,
-    padding: 15,
-    backgroundColor: '#FFF',
-    borderRadius: 8,
-    borderColor: '#E0E0E0',
-    borderWidth: 1,
-  },
-  locationText: {
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 5,
-  },
-  carOptionContainer: {
-    marginBottom: 20,
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
   },
   carOption: {
-    padding: 15,
-    backgroundColor: '#FFF',
-    borderRadius: 8,
-    borderColor: '#E0E0E0',
-    borderWidth: 1,
-    marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  carOptionContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  carIcon: {
-    marginRight: 10,
-  },
-  carOptionText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  distanceContainer: {
-    marginBottom: 20,
-    padding: 15,
-    backgroundColor: '#FFF',
+    padding: 16,
+    marginBottom: 8,
     borderRadius: 8,
-    borderColor: '#E0E0E0',
-    borderWidth: 1,
+    backgroundColor: '#f9f9f9',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  distanceContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  selectedCarOption: {
+    backgroundColor: '#e0f7fa',
   },
-  distanceIcon: {
-    marginRight: 10,
+  iconContainer: {
+    marginRight: 16,
   },
-  distanceText: {
-    fontSize: 16,
-    color: '#333',
+  carDetails: {
+    flex: 1,
   },
-  summaryContainer: {
-    padding: 30,
-    backgroundColor: '#FFF',
-    borderRadius: 8,
-    borderColor: '#E0E0E0',
-    borderWidth: 1,
-    width:350,
-   marginLeft: -15
-  },
-  summaryText: {
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 5,
-  },
-  button: {
-    padding: 15,
-    backgroundColor: '#4CAF50',
-    borderRadius: 10,
-    width: 300,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-    fontSize: 16,
+  carType: {
+    fontSize: 18,
     fontWeight: 'bold',
-    padding: 10,
-    marginTop: 10,
-    
+  },
+  carPrice: {
+    fontSize: 16,
+    color: '#666',
+    marginLeft: 16,
+
+  },
+  carImage: {
+    width: 100,
+    height: 60,
+    marginTop: 8,
+    borderRadius: 8,
+  },
+  selectedCarContainer: {
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: '#e0f7fa',
+    borderRadius: 8,
+  },
+  selectedCarText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  totalPriceText: {
+    fontSize: 16,
+    marginTop: 8,
+  },
+  confirmButton: {
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: '#00796b',
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  disabledConfirmButton: {
+    backgroundColor: '#b2dfdb',
+  },
+  confirmButtonText: {
+    fontSize: 18,
+    color: '#fff',
+  },
+  map: {
+    height: 300,
+    marginTop: 16,
+    borderRadius: 8,
   },
 });

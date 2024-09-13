@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import { router, useLocalSearchParams } from 'expo-router';
 import * as Location from 'expo-location';
-import { collection, addDoc } from 'firebase/firestore'; // Import Firestore methods
-import { db } from '../Confing/firebase';
 import styles from '../../styles/dropoff'; // Assuming you're using a separate stylesheet for dropoff screen
 
 const PRICE_PER_KM = 150; // PKR 150 per kilometer
@@ -47,7 +45,7 @@ export default function DropoffScreen() {
 
     setLoading(true);
     fetch(
-      `https://api.foursquare.com/v3/places/search?query=${text}&ll=${latitude},${longitude}&radius=2000`,
+      `https://api.foursquare.com/v3/places/search?query=${text}&ll=${latitude},${longitude}`,
       options
     )
       .then((response) => response.json())
@@ -70,40 +68,24 @@ export default function DropoffScreen() {
     setPrice(calculatedPrice);
   };
 
-  const saveDropoffData = async () => {
+  const confirmSelection = () => {
     if (!dropoffLocation) return;
 
-    try {
-      await addDoc(collection(db, 'dropoffs'), {
+    router.push({
+      pathname: '/carselection',
+      params: {
         pickupName: params.pickupName,
+        pickupAddress: params.pickupAddress,
         pickupLatitude: params.pickupLatitude,
         pickupLongitude: params.pickupLongitude,
         dropoffName: dropoffLocation.name,
+        dropoffAddress: dropoffLocation.location.formatted_address,
         dropoffLatitude: dropoffLocation.geocodes.main.latitude,
         dropoffLongitude: dropoffLocation.geocodes.main.longitude,
         distance,
         price,
-        timestamp: new Date(),
-      });
-
-      router.push({
-        pathname: '/carselection',
-        params: {
-          pickupName: params.pickupName,
-          pickupAddress: params.pickupAddress,
-          pickupLatitude: params.pickupLatitude,
-          pickupLongitude: params.pickupLongitude,
-          dropoffName: dropoffLocation.name,
-          dropoffAddress: dropoffLocation.location.formatted_address,
-          dropoffLatitude: dropoffLocation.geocodes.main.latitude,
-          dropoffLongitude: dropoffLocation.geocodes.main.longitude,
-          distance,
-          price,
-        },
-      });
-    } catch (error) {
-      console.error('Error saving dropoff data: ', error);
-    }
+      },
+    });
   };
 
   const changeDropoffLocation = () => {
@@ -171,15 +153,32 @@ export default function DropoffScreen() {
             description={'Your current location'}
           />
           {dropoffLocation && (
-            <Marker
-              coordinate={{
-                latitude: dropoffLocation.geocodes.main.latitude,
-                longitude: dropoffLocation.geocodes.main.longitude,
-              }}
-              pinColor="red"
-              title={'Dropoff Location'}
-              description={dropoffLocation.name}
-            />
+            <>
+              <Marker
+                coordinate={{
+                  latitude: dropoffLocation.geocodes.main.latitude,
+                  longitude: dropoffLocation.geocodes.main.longitude,
+                }}
+                pinColor="green"
+                title={'Dropoff Location'}
+                description={dropoffLocation.name}
+              />
+            <Polyline
+  coordinates={[
+    {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    },
+    {
+      latitude: dropoffLocation.geocodes.main.latitude,
+      longitude: dropoffLocation.geocodes.main.longitude,
+    },
+  ]}
+  strokeColor="#008000" // Correct color format with #
+  strokeWidth={3}
+/>
+
+            </>
           )}
         </MapView>
       )}
@@ -187,7 +186,7 @@ export default function DropoffScreen() {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={saveDropoffData}
+          onPress={confirmSelection}
           disabled={!dropoffLocation}
         >
           <Text style={styles.buttonText}>Confirm and Select Car</Text>

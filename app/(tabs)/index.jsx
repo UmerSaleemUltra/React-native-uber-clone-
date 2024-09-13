@@ -39,7 +39,7 @@ export default function PickupScreen() {
 
     setLoading(true);
     fetch(
-      `https://api.foursquare.com/v3/places/search?query=${text}&ll=${latitude},${longitude}&radius=2000`,
+      `https://api.foursquare.com/v3/places/search?query=${text}&ll=${latitude},${longitude}`,
       options
     )
       .then((response) => response.json())

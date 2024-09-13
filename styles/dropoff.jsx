@@ -52,7 +52,7 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
   changeLocationButton: {
-    marginTop: 10,
+    marginTop: -8,
     padding: 12,
     backgroundColor: '#FF5722',
     borderRadius: 10,
